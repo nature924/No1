@@ -53,12 +53,4 @@
 ### 程序截图：
 ![image/1.png]
 
-![image_readme/1.png](https://github.com/jasonlin233-cell/No002NursingHomeManagement/blob/main/image_readme/3.png)
-
-![image_readme/1.png](https://github.com/jasonlin233-cell/No002NursingHomeManagement/blob/main/image_readme/4.png)
-
-![image_readme/1.png](https://github.com/jasonlin233-cell/No002NursingHomeManagement/blob/main/image_readme/5.png)
-
-![image_readme/1.png](https://github.com/jasonlin233-cell/No002NursingHomeManagement/blob/main/image_readme/6.png)
-
-![image_rea
+![image/1.png](image/1.png)
