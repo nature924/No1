@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.WuziDao">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        a.id as id
+        ,a.wuzi_uuid_number as wuziUuidNumber
+        ,a.wuzi_name as wuziName
+        ,a.wuzi_photo as wuziPhoto
+        ,a.wuzi_danwei as wuziDanwei
+        ,a.wuzi_types as wuziTypes
+        ,a.wuzi_kucun_number as wuziKucunNumber
+        ,a.wuzi_yuzhi as wuziYuzhi
+        ,a.cangku_types as cangkuTypes
+        ,a.wuzi_content as wuziContent
+        ,a.insert_time as insertTime
+        ,a.create_time as createTime
+    </sql>
+    <select id="selectListView" parameterType="map" resultType="com.entity.view.WuziView" >
+        SELECT
+        <include refid="Base_Column_List" />
+        <!-- 级联表的字段 -->
+
+        FROM wuzi  a
+
+        <where>
+            <if test="params.ids != null">
+                and a.id in
+                <foreach item="item" index="index" collection="params.ids" open="(" separator="," close=")">
+                #{item}
+                </foreach>
+            </if>
+            <if test=" params.wuziUuidNumber != '' and params.wuziUuidNumber != null and params.wuziUuidNumber != 'null' ">
+                and a.wuzi_uuid_number like CONCAT('%',#{params.wuziUuidNumber},'%')
+            </if>
+            <if test=" params.wuziName != '' and params.wuziName != null and params.wuziName != 'null' ">
+                and a.wuzi_name like CONCAT('%',#{params.wuziName},'%')
+            </if>
+            <if test=" params.wuziDanwei != '' and params.wuziDanwei != null and params.wuziDanwei != 'null' ">
+                and a.wuzi_danwei like CONCAT('%',#{params.wuziDanwei},'%')
+            </if>
+            <if test="params.wuziTypes != null and params.wuziTypes != ''">
+                and a.wuzi_types = #{params.wuziTypes}
+            </if>
+            <if test="params.wuziKucunNumberStart != null and params.wuziKucunNumberStart != ''">
+                <![CDATA[  and a.wuzi_kucun_number >= #{params.wuziKucunNumberStart}   ]]>
+            </if>
+            <if test="params.wuziKucunNumberEnd != null and params.wuziKucunNumberEnd != ''">
+                <![CDATA[  and a.wuzi_kucun_number <= #{params.wuziKucunNumberEnd}   ]]>
+            </if>
+             <if test="params.wuziKucunNumber != null and params.wuziKucunNumber != ''">
+                and a.wuzi_kucun_number = #{params.wuziKucunNumber}
+             </if>
+            <if test="params.wuziYuzhiStart != null and params.wuziYuzhiStart != ''">
+                <![CDATA[  and a.wuzi_yuzhi >= #{params.wuziYuzhiStart}   ]]>
+            </if>
+            <if test="params.wuziYuzhiEnd != null and params.wuziYuzhiEnd != ''">
+                <![CDATA[  and a.wuzi_yuzhi <= #{params.wuziYuzhiEnd}   ]]>
+            </if>
+             <if test="params.wuziYuzhi != null and params.wuziYuzhi != ''">
+                and a.wuzi_yuzhi = #{params.wuziYuzhi}
+             </if>
+            <if test="params.cangkuTypes != null and params.cangkuTypes != ''">
+                and a.cangku_types = #{params.cangkuTypes}
+            </if>
+            <if test=" params.wuziContent != '' and params.wuziContent != null and params.wuziContent != 'null' ">
+                and a.wuzi_content like CONCAT('%',#{params.wuziContent},'%')
+            </if>
+            <if test=" params.insertTimeStart != '' and params.insertTimeStart != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) >= UNIX_TIMESTAMP(#{params.insertTimeStart}) ]]>
+            </if>
+            <if test=" params.insertTimeEnd != '' and params.insertTimeEnd != null ">
+                <![CDATA[  and UNIX_TIMESTAMP(a.insert_time) <= UNIX_TIMESTAMP(#{params.insertTimeEnd}) ]]>
+            </if>
+
+        </where>
+        order by a.${params.sort} ${params.order}
+    </select>
+
+</mapper>
